@@ -134,9 +134,10 @@ ${context || 'No documents uploaded yet.'}`;
 
   const callMistralAPI = async (userMessage: string) => {
     // Proxy through Vite to avoid CORS issues
-    const invoke_url = "/nvidia-api/v1/chat/completions";
+    const invoke_url = "/api/nvidia-proxy/v1/chat/completions";
     const apiKey = import.meta.env.VITE_NVIDIA_API_KEY;
-    
+    // No client‑side API key needed; the Vercel function injects it securely
+
     const apiMessages = [
       { role: "system", content: buildSystemPrompt() },
       ...activeMessages.map(m => ({ role: m.role, content: m.content })),
@@ -147,7 +148,6 @@ ${context || 'No documents uploaded yet.'}`;
       const response = await fetch(invoke_url, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${apiKey}`,
           "Accept": "text/event-stream",
           "Content-Type": "application/json"
         },
