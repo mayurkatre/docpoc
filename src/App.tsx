@@ -135,7 +135,7 @@ ${context || 'No documents uploaded yet.'}`;
   const callMistralAPI = async (userMessage: string) => {
     // Proxy through Vite to avoid CORS issues
     const invoke_url = "/nvidia-api/v1/chat/completions";
-    const apiKey = "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";
+    const apiKey = import.meta.env.VITE_NVIDIA_API_KEY;
     
     const apiMessages = [
       { role: "system", content: buildSystemPrompt() },
